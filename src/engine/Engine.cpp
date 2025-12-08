@@ -2,7 +2,7 @@
 #include "iostream"
 
 Engine::Engine(unsigned int width, unsigned int height, const std::string &title)
-    : window(sf::VideoMode({width, height}), title) {
+    : window(sf::VideoMode({width, height}), title), world(30, 50) {
 }
 
 void Engine::run() {
@@ -14,6 +14,9 @@ void Engine::run() {
             if (event->is<sf::Event::Closed>() || sf::Keyboard::isKeyPressed(Scancode::Escape)) window.close();
 
         }
+        float dt = clock.restart().asSeconds();
+
+        world.update(dt, window);
     }
 
 }
