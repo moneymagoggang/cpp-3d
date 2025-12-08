@@ -1,13 +1,21 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
+
 
 class World {
 public:
-    World(unsigned int width, unsigned int height);
+    World();
     void run();
     void update(float dt, sf::RenderWindow &window);
+    void handleEvent(const sf::Event *event, sf::RenderWindow &window);
+    sf::Color getRandomColor();
 
 private:
-    sf::RectangleShape rect;
+    std::vector<sf::RectangleShape> rectangles;
+    float timeout = 0.f;
+
+    sf::Vector2i cursorPos;
+
 };
