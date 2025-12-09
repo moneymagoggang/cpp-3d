@@ -4,14 +4,12 @@
 #include <vector>
 
 
-class World {
+class Camera {
 public:
-    World();
-    void update(float dt, sf::RenderWindow &window);
+    Camera();
+    // void update(float dt, sf::RenderWindow &window);
     void handleEvent(const sf::Event *event, sf::RenderWindow &window);
     sf::Color getRandomColor(int seed = 256);
 
 private:
-    std::vector<sf::RectangleShape> rectangles;
-    sf::Texture tileTexture;
 };

@@ -3,15 +3,36 @@
 #include <cstdlib>
 
 World::World() {
-    const float rectSize = 30.f;
-    const float spacing = 0.f;
+    if (!tileTexture.loadFromFile("../assets/textures/tile.png")) {
+        std::cerr << "Failed to load tile.png" << std::endl;
+    }
 
-    for (int y = 0; y < 10; ++y) {
-        for (int x = 0; x < 10; ++x) {
+    const float rectSize = 80.f;
+    const float windowWidth = 800.f;
+    const float windowHeight = 600.f;
+
+    const int rows = 10;
+    const int cols = 10;
+
+    float mapCenterX = ((cols - 1) - (rows - 1)) * rectSize * 0.5f;
+    float mapCenterY = ((cols - 1) + (rows - 1)) * rectSize * 0.5f;
+
+    float offsetX = windowWidth / 2  - mapCenterX;
+    float offsetY = windowHeight / 2 - mapCenterY + 500.f;
+
+    for (int y = 0; y < cols; y++) {
+        for (int x = 0; x < rows; x++) {
             sf::RectangleShape rect(sf::Vector2f(rectSize, rectSize));
-            rect.setPosition({x * (rectSize + spacing) + 50.f, y * (rectSize + spacing) + 50.f});
+            sf::Vector2f isoPos(
+                (x - y) * rectSize * 0.5f,
+                (x + y) * rectSize * 0.25f
+            );
+            isoPos.x += offsetX;
+            isoPos.y += offsetY;
+            rect.setPosition(isoPos);
 
-            rect.setFillColor(getRandomColor());
+            rect.setTexture(&tileTexture);
+            // rect.setFillColor(sf::Color::White);
 
             rectangles.push_back(rect);
         }
@@ -22,32 +43,19 @@ World::World() {
 void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
     if (event->is<sf::Event::MouseMoved>() )
     {
-        cursorPos = sf::Mouse::getPosition(window);
-
-        std::cout << "Position of cursor: " << cursorPos.x << "," << cursorPos.y << std::endl;
+        for (auto &r : rectangles)
+        {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            if (r.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+                r.setPosition({r.getPosition().x, r.getPosition().y - 10.f});
+            }
+        }
     }
 }
 
 
 void World::update(float dt, sf::RenderWindow &window) {
     window.clear();
-
-    bool isHovering = false;
-    for (auto& rect : rectangles) {
-        if (rect.getGlobalBounds().contains(static_cast<sf::Vector2f>(cursorPos))) {
-            isHovering = true;
-            if (timeout >= 0.2f) {
-                timeout = 0.f;
-                rect.setFillColor(getRandomColor());
-            }
-        }
-    }
-
-    if (isHovering) {
-        timeout += dt;
-    } else {
-        timeout = 0.f;
-    }
 
     for (const auto& rect : rectangles) {
         window.draw(rect);
@@ -57,12 +65,12 @@ void World::update(float dt, sf::RenderWindow &window) {
 }
 
 
-sf::Color World::getRandomColor() {
-    return sf::Color(
-        rand() % 256,
-        rand() % 256,
-        rand() % 256
-    );
+sf::Color World::getRandomColor(int seed) {
+        int r = rand() % 50;             // от 0 до 49
+        int g = 150 + rand() % 105;      // от 150 до 255
+        int b = rand() % 50;             // от 0 до 49
+
+        return sf::Color(r, g, b);
 }
 
 
