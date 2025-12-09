@@ -43,6 +43,7 @@ void Engine::run() {
             view.setSize(window.getDefaultView().getSize() / zoomLevel);
         }
 
+
         ImGui::Separator();
         ImGui::Text("World Info");
         ImGui::Text("Delta Time: %.3f ms", dt * 1000.0f);
