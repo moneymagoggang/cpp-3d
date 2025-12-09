@@ -3,6 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+struct Tile {
+    sf::RectangleShape shape;
+    sf::Vector2f basePosition;
+    float currentOffset = 0.f;
+    float targetOffset = 0.f;
+};
 
 class World {
 public:
@@ -12,6 +18,8 @@ public:
     sf::Color getRandomColor(int seed = 256);
 
 private:
-    std::vector<sf::RectangleShape> rectangles;
+    std::vector<Tile> tiles;
     sf::Texture tileTexture;
+    sf::Vector2i lastMousePos;
+    float OFFSET_HEIGHT = 10.f;
 };

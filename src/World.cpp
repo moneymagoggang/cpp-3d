@@ -23,18 +23,23 @@ World::World() {
     for (int y = 0; y < cols; y++) {
         for (int x = 0; x < rows; x++) {
             sf::RectangleShape rect(sf::Vector2f(rectSize, rectSize));
+
+            Tile tile;
+            tile.shape = sf::RectangleShape(sf::Vector2f(rectSize, rectSize));
             sf::Vector2f isoPos(
                 (x - y) * rectSize * 0.25f,
                 (x + y) * rectSize * 0.2f
             );
             isoPos.x += offsetX;
             isoPos.y += offsetY;
-            rect.setPosition(isoPos);
 
-            rect.setTexture(&tileTexture);
+            tile.shape.setPosition(isoPos);
+            tile.basePosition = isoPos;
+
+            tile.shape.setTexture(&tileTexture);
             // rect.setFillColor(sf::Color::White);
 
-            rectangles.push_back(rect);
+            tiles.push_back(tile);
         }
     }
 }
@@ -43,22 +48,44 @@ World::World() {
 void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
     if (event->is<sf::Event::MouseMoved>() )
     {
-        for (auto &r : rectangles)
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        for (auto &t : tiles)
         {
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            if (r.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-                r.setPosition({r.getPosition().x, r.getPosition().y - 10.f});
+            sf::RectangleShape &r = t.shape;
+            if (t.targetOffset == 0.f && r.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+                // r.setPosition({r.getPosition().x, r.getPosition().y - OFFSET_HEIGHT});
+                t.targetOffset = -OFFSET_HEIGHT;
             }
         }
+
+        lastMousePos = mousePos;
     }
 }
 
 
 void World::update(float dt, sf::RenderWindow &window) {
     // window.clear();
+    for (auto& tile : tiles) {
+        window.draw(tile.shape);
 
-    for (const auto& rect : rectangles) {
-        window.draw(rect);
+        if (tile.currentOffset != 0.f && !tile.shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(lastMousePos))) {
+            // tile.shape.setPosition(tile.basePosition);
+            tile.targetOffset = 0.f;
+        }
+
+        const float offsetStep = 0.5f;
+        const float offsetDiff = tile.targetOffset - tile.currentOffset;
+        if (offsetDiff != 0) {
+            if (offsetDiff > 0) {
+                tile.currentOffset += offsetStep;
+                tile.shape.setPosition({tile.shape.getPosition().x, tile.shape.getPosition().y + offsetStep});
+            } else {
+                tile.currentOffset -= offsetStep;
+                tile.shape.setPosition({tile.shape.getPosition().x, tile.shape.getPosition().y - offsetStep});
+            }
+        }
+
+        std::cout << dt << std::endl;
     }
 
     // window.display();

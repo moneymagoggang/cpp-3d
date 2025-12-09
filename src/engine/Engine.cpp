@@ -13,6 +13,7 @@ void Engine::run() {
     float lastTime = 0;
     // bool dragging = false;
     sf::View view = window.getDefaultView();
+    window.setFramerateLimit(60);
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             using Scancode = sf::Keyboard::Scancode;
