@@ -1,0 +1,31 @@
+# CMake build directories
+cmake-build-*/
+build/
+out/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# Platform specific
+.DS_Store
+Thumbs.db
+
+# CMake cache
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Dependencies (FetchContent will download them)
+_deps/
