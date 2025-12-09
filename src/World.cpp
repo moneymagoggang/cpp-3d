@@ -24,8 +24,8 @@ World::World() {
         for (int x = 0; x < rows; x++) {
             sf::RectangleShape rect(sf::Vector2f(rectSize, rectSize));
             sf::Vector2f isoPos(
-                (x - y) * rectSize * 0.5f,
-                (x + y) * rectSize * 0.25f
+                (x - y) * rectSize * 0.25f,
+                (x + y) * rectSize * 0.2f
             );
             isoPos.x += offsetX;
             isoPos.y += offsetY;
