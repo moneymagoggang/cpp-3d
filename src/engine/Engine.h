@@ -1,6 +1,8 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <imgui.h>
+#include <imgui-SFML.h>
 
 #include "../World.h"
 

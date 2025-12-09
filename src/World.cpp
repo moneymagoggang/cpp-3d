@@ -55,13 +55,13 @@ void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
 
 
 void World::update(float dt, sf::RenderWindow &window) {
-    window.clear();
+    // window.clear();
 
     for (const auto& rect : rectangles) {
         window.draw(rect);
     }
 
-    window.display();
+    // window.display();
 }
 
 
