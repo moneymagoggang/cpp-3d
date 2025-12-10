@@ -3,7 +3,7 @@
 
 
 Engine::Engine(unsigned int width, unsigned int height, const std::string &title)
-    : window(sf::VideoMode({width, height}), title), debug(window), texture("../assets/textures/background.png") ,sprite(texture) {
+    : window(sf::VideoMode({width, height}), title), debug(window), world(window), texture("../assets/textures/background.png") ,sprite(texture) {
 }
 
 void Engine::run() {

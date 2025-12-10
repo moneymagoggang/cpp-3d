@@ -4,17 +4,11 @@
 #include <vector>
 
 #include "Player.h"
-
-struct Tile {
-    sf::RectangleShape shape;
-    sf::Vector2f basePosition;
-    float currentOffset = 0.f;
-    float targetOffset = 0.f;
-};
+#include "Tile.h"
 
 class World {
 public:
-    World();
+    World(sf::RenderWindow &window);
     void update(float dt, sf::RenderWindow &window);
     void handleEvent(const sf::Event *event, sf::RenderWindow &window);
     void renderTiles();
