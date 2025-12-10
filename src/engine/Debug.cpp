@@ -19,7 +19,7 @@ void Debug::render(float dt, sf::RenderWindow &window, sf::View &view) {
     static bool showGrid = false;
     ImGui::Checkbox("Show Grid", &showGrid);
 
-    static float zoomLevel = 1.0f;
+    static float zoomLevel = 0.f;
     if (ImGui::SliderFloat("Zoom", &zoomLevel, 0.1f, 5.0f)) {
         view.setSize(window.getDefaultView().getSize() / zoomLevel);
     }

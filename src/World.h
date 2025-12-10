@@ -17,6 +17,7 @@ public:
     World();
     void update(float dt, sf::RenderWindow &window);
     void handleEvent(const sf::Event *event, sf::RenderWindow &window);
+    void renderTiles();
     sf::Color getRandomColor(int seed = 256);
 
 private:
@@ -25,5 +26,5 @@ private:
     sf::Vector2i lastMousePos;
     float OFFSET_HEIGHT = 10.f;
 
-
+    Player player;
 };

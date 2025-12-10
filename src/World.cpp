@@ -3,6 +3,10 @@
 #include <cstdlib>
 
 World::World() {
+   renderTiles();
+}
+
+void World::renderTiles() {
     if (!tileTexture.loadFromFile("../assets/textures/tile.png")) {
         std::cerr << "Failed to load tile.png" << std::endl;
     }
@@ -86,6 +90,7 @@ void World::update(float dt, sf::RenderWindow &window) {
         }
     }
 
+    player.render(dt, window);
     // window.display();
 }
 
