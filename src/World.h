@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "Player.h"
+
 struct Tile {
     sf::RectangleShape shape;
     sf::Vector2f basePosition;
@@ -22,4 +24,6 @@ private:
     sf::Texture tileTexture;
     sf::Vector2i lastMousePos;
     float OFFSET_HEIGHT = 10.f;
+
+
 };

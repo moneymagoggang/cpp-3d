@@ -29,6 +29,10 @@ target_link_libraries(ImGui-SFML PUBLIC SFML::Graphics)
 add_executable(cpp-3d main.cpp
         src/engine/Engine.cpp
         src/engine/Engine.h
+        src/engine/Debug.cpp
+        src/engine/Debug.h
+        src/Player.cpp
+        src/Player.h
         src/World.cpp
         src/World.h
 )

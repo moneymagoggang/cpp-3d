@@ -11,14 +11,14 @@ World::World() {
     const float windowWidth = 800.f;
     const float windowHeight = 600.f;
 
-    const int rows = 10;
-    const int cols = 10;
+    const int rows = 50;
+    const int cols = 50;
 
     float mapCenterX = ((cols - 1) - (rows - 1)) * rectSize * 0.5f;
     float mapCenterY = ((cols - 1) + (rows - 1)) * rectSize * 0.5f;
 
     float offsetX = windowWidth / 2  - mapCenterX;
-    float offsetY = windowHeight / 2 - mapCenterY + 500.f;
+    float offsetY = windowHeight / 2 - mapCenterY + cols * rows + 700.f;
 
     for (int y = 0; y < cols; y++) {
         for (int x = 0; x < rows; x++) {
@@ -84,8 +84,6 @@ void World::update(float dt, sf::RenderWindow &window) {
                 tile.shape.setPosition({tile.shape.getPosition().x, tile.shape.getPosition().y - offsetStep});
             }
         }
-
-        std::cout << dt << std::endl;
     }
 
     // window.display();

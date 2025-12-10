@@ -1,9 +1,8 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <imgui.h>
-#include <imgui-SFML.h>
 
+#include "Debug.h"
 #include "../World.h"
 
 class Engine {
@@ -13,6 +12,10 @@ public:
 
 private:
     sf::RenderWindow window;
+    sf::Texture texture;
+    sf::Sprite sprite;
+
+    Debug debug;
 
     World world;
 };
