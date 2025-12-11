@@ -12,12 +12,15 @@ Player::Player(): playerTexture("../assets/textures/farmer.png") {
     playerShape.setTexture(&playerTexture);
     // playerShape.setPosition({0.f, 0.f});
     // playerShape.setFillColor(sf::Color::Red);
-    playerShape.setSize({45.f, 60.f});
+    playerShape.setSize(PLAYER_SIZE);
 }
 
 void Player::setGridPosition(Tile tile) {
-    playerShape.setPosition(tile.basePosition);
+    if (!tile.accessible) return;
+    playerShape.setPosition({tile.basePosition.x + (tile.TILE_SIZE - PLAYER_SIZE.x )  / 2,
+                             tile.basePosition.y});
     this->tile = tile;
+    tile.accessible =false;
     std::cout << playerShape.getPosition().x << std::endl;
 }
 

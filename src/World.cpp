@@ -5,6 +5,7 @@
 World::World(sf::RenderWindow &window) {
    renderTiles();
     player.setGridPosition(tiles[20]);
+    rock.setGridPosition(tiles[56]);
 }
 
 void World::renderTiles() {
@@ -58,15 +59,16 @@ void World::renderTiles() {
 
 void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    const float x = mousePos.x;
+    const float y = mousePos.y;
+
+    sf::Vector2i gridPos(
+        (int)(-130.f * 0.25f * x - 130.f * 0.5f * y) / (-130.f * 0.5f * 130.f * 0.25f - 130.f * 0.5f * 130.f * 0.25f),
+        (int)(130.f * 0.25f * x - 130.f * 0.5f * y) / (-130.f * 0.5f * 130.f * 0.25f - 130.f * 0.5f * 130.f * 0.25f)
+    );
     if (event->is<sf::Event::MouseMoved>() )
     {
-        const float x = mousePos.x;
-        const float y = mousePos.y;
 
-        sf::Vector2i gridPos(
-            (int)(-130.f * 0.25f * x - 130.f * 0.5f * y) / (-130.f * 0.5f * 130.f * 0.25f - 130.f * 0.5f * 130.f * 0.25f),
-            (int)(130.f * 0.25f * x - 130.f * 0.5f * y) / (-130.f * 0.5f * 130.f * 0.25f - 130.f * 0.5f * 130.f * 0.25f)
-        );
 
 
         for (auto &t : tiles)
@@ -87,19 +89,17 @@ void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
         lastMousePos = mousePos;
     }
 
-    // if (event->is<sf::Event::MouseButtonReleased>() )
-    // {
-    //     std::cout << "Mouse pressed" << std::endl;
-    //     for (auto &t : tiles)
-    //     {
-    //         if (t.contains(static_cast<sf::Vector2f>(mousePos))) {
-    //             std::cout << "Tile pressed" << std::endl;
-    //             player.setGridPosition(t);
-    //         }
-    //     }
-    //
-    //     lastMousePos = mousePos;
-    // }
+    if (event->is<sf::Event::MouseButtonReleased>() )
+    {
+        std::cout << "Mouse pressed" << std::endl;
+        for (auto &t : tiles)
+        {
+            if (t.gridPosition.x == gridPos.x && t.gridPosition.y == gridPos.y) {
+                std::cout << "Tile pressed" << std::endl;
+                player.setGridPosition(t);
+            }
+        }
+    }
 }
 
 
@@ -131,6 +131,7 @@ void World::update(float dt, sf::RenderWindow &window) {
     }
 
     player.render(window);
+    rock.render(window);
 
     // window.display();
 }

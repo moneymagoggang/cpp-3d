@@ -29,6 +29,8 @@ public:
     GridCoordinate gridPosition;
     bool accessible;
 
+    float TILE_SIZE = 130.f;
+
 private:
     sf::RectangleShape shape;
     float currentOffset = 0.f;

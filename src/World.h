@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Tile.h"
 #include "engine/SoundManager.h"
+#include "Objects/Rock.h"
 
 class World {
 public:
@@ -26,5 +27,6 @@ private:
     int WATER_BORDER = 2;
 
     Player player;
+    Rock rock;
     SoundManager soundManager;
 };
