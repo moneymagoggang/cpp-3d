@@ -6,6 +6,7 @@ World::World(sf::RenderWindow &window) {
    renderTiles();
     player.setGridPosition(tiles[20]);
     rock.setGridPosition(tiles[56]);
+    tree.setGridPosition(tiles[34]);
 }
 
 void World::renderTiles() {
@@ -132,6 +133,7 @@ void World::update(float dt, sf::RenderWindow &window) {
 
     player.render(window);
     rock.render(window);
+    tree.render(window);
 
     // window.display();
 }

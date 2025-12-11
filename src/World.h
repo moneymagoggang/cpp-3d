@@ -8,6 +8,7 @@
 #include "Tile.h"
 #include "engine/SoundManager.h"
 #include "Objects/Rock.h"
+#include "Objects/Tree.h"
 
 class World {
 public:
@@ -28,5 +29,6 @@ private:
 
     Player player;
     Rock rock;
+    Tree tree;
     SoundManager soundManager;
 };

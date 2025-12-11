@@ -1,3 +1,5 @@
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include "SFML/Graphics.hpp"
 #include "../Tile.h"
@@ -18,3 +20,5 @@ protected:
     sf::Texture texture;
 
 };
+
+#endif // OBJECT_H
