@@ -8,16 +8,20 @@ World::World(sf::RenderWindow &window) {
 }
 
 void World::renderTiles() {
-    if (!tileTexture.loadFromFile("../assets/textures/tile2.png")) {
-        std::cerr << "Failed to load tile.png" << std::endl;
+    if (!grassTileTexture.loadFromFile("../assets/textures/tiles/grass.png")) {
+        std::cerr << "Failed to load grass.png" << std::endl;
+    }
+
+    if (!waterTileTexture.loadFromFile("../assets/textures/tiles/water.png")) {
+        std::cerr << "Failed to load water.png" << std::endl;
     }
 
     const float rectSize = 130.f;
     const float windowWidth = 800.f;
     const float windowHeight = 600.f;
 
-    const int rows = 6;
-    const int cols = 6;
+    const int rows = 15;
+    const int cols = 15;
 
     // float mapCenterX = ((cols - 1) - (rows - 1)) * rectSize * 0.5f;
     // float mapCenterY = ((cols - 1) + (rows - 1)) * rectSize * 0.5f - 1300.f;
@@ -31,11 +35,20 @@ void World::renderTiles() {
                 (x - y) * rectSize * 0.5f,
                 (x + y) * rectSize * 0.25f
             );
+
+            bool border =
+                x < WATER_BORDER ||
+                x >= cols - WATER_BORDER ||
+                y < WATER_BORDER ||
+                y >= rows - WATER_BORDER;
+
+            sf::Texture* texture = border ? &waterTileTexture : &grassTileTexture;
+            bool accessible = !border;
             // isoPos.x -= (rectSize * 0.5f) - offsetX;
             // isoPos.y += offsetY;
 
             GridCoordinate gridPos = { x, y };
-            Tile tile(isoPos, gridPos, &tileTexture);
+            Tile tile(isoPos, gridPos, texture, accessible);
 
             tiles.push_back(tile);
         }
@@ -58,6 +71,7 @@ void World::handleEvent(const sf::Event *event, sf::RenderWindow &window) {
 
         for (auto &t : tiles)
         {
+            if (!t.accessible) continue;
             if (t.gridPosition.x == gridPos.x && t.gridPosition.y == gridPos.y) {
                 std::cout << "Tale " + std::to_string(t.gridPosition.x) + " " + std::to_string(t.gridPosition.y) + " hovered" << std::endl;
                 t.setTargetOffset(-OFFSET_HEIGHT);

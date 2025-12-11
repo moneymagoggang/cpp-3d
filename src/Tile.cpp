@@ -4,12 +4,13 @@ Tile::Tile() {
     shape = sf::RectangleShape(sf::Vector2f(130.f, 130.f));
 }
 
-Tile::Tile(const sf::Vector2f& position, const GridCoordinate& gridPos, const sf::Texture* texture) {
+Tile::Tile(const sf::Vector2f& position, const GridCoordinate& gridPos, sf::Texture* texture, bool accessibleArg) {
     shape = sf::RectangleShape(sf::Vector2f(130.f, 130.f));
     shape.setPosition(position);
     shape.setTexture(texture);
     basePosition = position;
     gridPosition = gridPos;
+    accessible = accessibleArg;
 }
 
 void Tile::setPosition(const sf::Vector2f& position) {

@@ -10,7 +10,7 @@ struct GridCoordinate {
 class Tile {
 public:
     Tile();
-    Tile(const sf::Vector2f& position, const GridCoordinate& gridPos, const sf::Texture* texture);
+    Tile(const sf::Vector2f& position, const GridCoordinate& gridPos, sf::Texture* texture, bool accessibleArg = true);
 
     void setPosition(const sf::Vector2f& position);
     sf::Vector2f getPosition() const;
@@ -27,6 +27,7 @@ public:
 
     sf::Vector2f basePosition;
     GridCoordinate gridPosition;
+    bool accessible;
 
 private:
     sf::RectangleShape shape;
